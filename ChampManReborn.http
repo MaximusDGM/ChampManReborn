@@ -1,0 +1,6 @@
+@ChampManReborn_HostAddress = http://localhost:5225
+
+GET {{ChampManReborn_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

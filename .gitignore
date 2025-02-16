@@ -1,0 +1,37 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+# Ignore user- and IDE-specific files
+.vscode/
+.vs/
+.idea/
+*.user
+*.suo
+*.sln.docstates
+
+# Secrets and configuration
+appsettings.json
+appsettings.Development.json
+appsettings.*.json
+
+# Dependencies
+packages/
+logs/
+*.log
+*.lock.json
+
+# Test artifacts
+TestResults/
+coverage/
+
+# Dotnet specific
+**/project.lock.json
+**/artifacts/
+**/project.fragment.lock.json
+**/*.pdb
+**/project.nuget.cache
+**/Temp
+**/*.snk

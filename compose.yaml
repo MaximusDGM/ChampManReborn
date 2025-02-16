@@ -1,0 +1,37 @@
+﻿services:
+  champmanreborn:
+    image: champmanreborn
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  champmanreborn.api:
+    image: champmanreborn.api
+    build:
+      context: .
+      dockerfile: ChampManReborn.API/Dockerfile
+      
+  
+  champmanreborn.application:
+    image: champmanreborn.application
+    build:
+      context: .
+      dockerfile: ChampManReborn.Application/Dockerfile
+
+  champmanreborn.infrastructure:
+    image: champmanreborn.infrastructure
+    build:
+      context: .
+      dockerfile: ChampManReborn.Infrastructure/Dockerfile
+
+  champmanreborn.domain:
+    image: champmanreborn.domain
+    build:
+      context: .
+      dockerfile: ChampManReborn.Domain/Dockerfile
+
+  champmanreborn.tests:
+    image: champmanreborn.tests
+    build:
+      context: .
+      dockerfile: ChampManReborn.Tests/Dockerfile

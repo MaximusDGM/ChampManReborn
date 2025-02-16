@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD878CE0-4FC4-4635-9B92-14FF67837167}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.API", "ChampManReborn.API\ChampManReborn.API.csproj", "{B9C8F32A-6924-4547-8BC8-6625250067C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.Infrastructure", "ChampManReborn.Infrastructure\ChampManReborn.Infrastructure.csproj", "{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.Application", "ChampManReborn.Application\ChampManReborn.Application.csproj", "{2C07B813-0E41-4424-8D51-059C42A7ECFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.Domain", "ChampManReborn.Domain\ChampManReborn.Domain.csproj", "{3098F36A-4C8C-4C7D-822D-D5EFCBB1734F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.Tests", "ChampManReborn.Tests\ChampManReborn.Tests.csproj", "{3C0554A0-C5A8-44BA-9C72-BA86A9047237}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9C8F32A-6924-4547-8BC8-6625250067C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C8F32A-6924-4547-8BC8-6625250067C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C8F32A-6924-4547-8BC8-6625250067C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C8F32A-6924-4547-8BC8-6625250067C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C07B813-0E41-4424-8D51-059C42A7ECFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C07B813-0E41-4424-8D51-059C42A7ECFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C07B813-0E41-4424-8D51-059C42A7ECFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C07B813-0E41-4424-8D51-059C42A7ECFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3098F36A-4C8C-4C7D-822D-D5EFCBB1734F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3098F36A-4C8C-4C7D-822D-D5EFCBB1734F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3098F36A-4C8C-4C7D-822D-D5EFCBB1734F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3098F36A-4C8C-4C7D-822D-D5EFCBB1734F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C0554A0-C5A8-44BA-9C72-BA86A9047237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C0554A0-C5A8-44BA-9C72-BA86A9047237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C0554A0-C5A8-44BA-9C72-BA86A9047237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C0554A0-C5A8-44BA-9C72-BA86A9047237}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
