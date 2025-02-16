@@ -35,3 +35,9 @@
     build:
       context: .
       dockerfile: ChampManReborn.Tests/Dockerfile
+
+  champmanreborn.core:
+    image: champmanreborn.core
+    build:
+      context: .
+      dockerfile: ChampManReborn.Core/Dockerfile
