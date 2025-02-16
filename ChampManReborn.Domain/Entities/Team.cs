@@ -1,9 +1,9 @@
 ﻿namespace ChampManReborn.Domain.Entities;
 
-public class Person
+public class Team
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
-    public int Age { get; set; }
-
+    public required string Stadium { get; set; }
+    public List<Player> Players { get; set; } = [];
 }
