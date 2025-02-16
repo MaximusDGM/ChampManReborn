@@ -8,4 +8,8 @@
         <OutputType>Library</OutputType>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ChampManReborn.Domain\ChampManReborn.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

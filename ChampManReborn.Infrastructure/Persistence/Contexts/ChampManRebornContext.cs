@@ -1,6 +1,6 @@
 ﻿namespace ChampManReborn.Infrastructure.Persistence.Contexts;
 
-public class DbContext
+public class ChampManRebornContext
 {
     
 }
