@@ -1,10 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD878CE0-4FC4-4635-9B92-14FF67837167}"
-	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.API", "ChampManReborn.API\ChampManReborn.API.csproj", "{B9C8F32A-6924-4547-8BC8-6625250067C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampManReborn.Infrastructure", "ChampManReborn.Infrastructure\ChampManReborn.Infrastructure.csproj", "{DFD6C610-36CD-4DEA-8F14-4FD659765C1D}"
