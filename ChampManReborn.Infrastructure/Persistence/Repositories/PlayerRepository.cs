@@ -1,63 +1,58 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class PlayerRepository : IPlayerRepository
 {
-    private readonly DbContext _dbContext;
+    private readonly List<Player> _mockPlayers =
+    [
+        new() { Id = Guid.NewGuid(), Name = "Player 1", Age = 25 },
+        new() { Id = Guid.NewGuid(), Name = "Player 2", Age = 28 },
+        new() { Id = Guid.NewGuid(), Name = "Player 3", Age = 22 }
+    ];
 
-    public PlayerRepository(DbContext dbContext)
+    public Task<IEnumerable<Player>> GetAllAsync()
     {
-        _dbContext = dbContext;
+        return Task.FromResult(_mockPlayers.AsEnumerable());
     }
 
-    public async Task<IEnumerable<Player>> GetAllAsync()
+    public Task<Player?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Set<Player>().ToListAsync();
+        var player = _mockPlayers.FirstOrDefault(p => p.Id == id);
+        return Task.FromResult(player);
     }
 
-    public async Task<Player> GetByIdAsync(Guid id)
+    public Task AddAsync(Player player)
     {
-        return await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == id);
+        _mockPlayers.Add(player);
+        return Task.CompletedTask;
     }
 
-    public async Task AddAsync(Player player)
+    public Task UpdateAsync(Player player)
     {
-        await _dbContext.Set<Player>().AddAsync(player);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Player player)
-    {
-        var existingPlayer = await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == player.Id);
-        if (existingPlayer == null)
+        var existingPlayer = _mockPlayers.FirstOrDefault(p => p.Id == player.Id);
+        if (existingPlayer != null)
         {
-            return;
+            existingPlayer.Name = player.Name;
+            existingPlayer.Age = player.Age;
         }
-
-        existingPlayer.Name = player.Name;
-        existingPlayer.Age = player.Age;
-
-        _dbContext.Set<Player>().Update(existingPlayer);
-        await _dbContext.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public Task DeleteAsync(Guid id)
     {
-        var player = await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == id);
+        var player = _mockPlayers.FirstOrDefault(p => p.Id == id);
         if (player != null)
         {
-            _dbContext.Set<Player>().Remove(player);
-            await _dbContext.SaveChangesAsync();
+            _mockPlayers.Remove(player);
         }
+        return Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
+    public Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
     {
-        return await _dbContext.Set<Player>()
-            .Where(p => p.Id == teamId)
-            .ToListAsync();
+        var players = _mockPlayers.Where(p => p.Id == teamId);
+        return Task.FromResult(players.AsEnumerable());
     }
 }
