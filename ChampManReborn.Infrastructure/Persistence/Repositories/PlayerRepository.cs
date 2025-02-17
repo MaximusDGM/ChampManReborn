@@ -1,58 +1,46 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
+using ChampManReborn.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
-public class PlayerRepository : IPlayerRepository
+public class PlayerRepository(ChampManRebornContext dbContext) : IPlayerRepository
 {
-    private readonly List<Player> _mockPlayers =
-    [
-        new() { Id = Guid.NewGuid(), Name = "Player 1", Age = 25 },
-        new() { Id = Guid.NewGuid(), Name = "Player 2", Age = 28 },
-        new() { Id = Guid.NewGuid(), Name = "Player 3", Age = 22 }
-    ];
-
-    public Task<IEnumerable<Player>> GetAllAsync()
+    public async Task<IEnumerable<Player>> GetAllAsync()
     {
-        return Task.FromResult(_mockPlayers.AsEnumerable());
+        return await dbContext.Players.ToListAsync();
     }
 
-    public Task<Player?> GetByIdAsync(Guid id)
+    public async Task<Player?> GetByIdAsync(Guid id)
     {
-        var player = _mockPlayers.FirstOrDefault(p => p.Id == id);
-        return Task.FromResult(player);
+        return await dbContext.Players.FindAsync(id);
     }
 
-    public Task AddAsync(Player player)
+    public async Task AddAsync(Player player)
     {
-        _mockPlayers.Add(player);
-        return Task.CompletedTask;
+        await dbContext.Players.AddAsync(player);
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(Player player)
+    public async Task UpdateAsync(Player player)
     {
-        var existingPlayer = _mockPlayers.FirstOrDefault(p => p.Id == player.Id);
-        if (existingPlayer != null)
-        {
-            existingPlayer.Name = player.Name;
-            existingPlayer.Age = player.Age;
-        }
-        return Task.CompletedTask;
+        dbContext.Players.Update(player);
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        var player = _mockPlayers.FirstOrDefault(p => p.Id == id);
+        var player = await dbContext.Players.FindAsync(id);
         if (player != null)
         {
-            _mockPlayers.Remove(player);
+            dbContext.Players.Remove(player);
+            await dbContext.SaveChangesAsync();
         }
-        return Task.CompletedTask;
     }
 
-    public Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
+    public async Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
     {
-        var players = _mockPlayers.Where(p => p.Id == teamId);
-        return Task.FromResult(players.AsEnumerable());
+        return await dbContext.Players.Where(p => p.Id == teamId).ToListAsync();
     }
 }
