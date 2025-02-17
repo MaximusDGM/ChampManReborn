@@ -13,17 +13,17 @@ public class MatchService : IMatchService
         _matchRepository = matchRepository;
     }
 
-    public async Task<IEnumerable<Match>> GetAllMatchesAsync()
+    public async Task<IEnumerable<Match?>> GetAllMatchesAsync()
     {
         return await _matchRepository.GetAllAsync();
     }
 
-    public async Task<Match> GetMatchByIdAsync(Guid id)
+    public async Task<Match?> GetMatchByIdAsync(Guid id)
     {
         return await _matchRepository.GetByIdAsync(id);
     }
 
-    public async Task AddMatchAsync(Match match)
+    public async Task AddMatchAsync(Match? match)
     {
         await _matchRepository.AddAsync(match);
     }

@@ -7,17 +7,17 @@ namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class MatchRepository(ChampManRebornContext champManRebornContext) : IMatchRepository
 {
-    public async Task<IEnumerable<Match>> GetAllAsync()
+    public async Task<IEnumerable<Match?>> GetAllAsync()
     {
         return await champManRebornContext.Matches.ToListAsync();
     }
 
-    public async Task<Match> GetByIdAsync(Guid id)
+    public async Task<Match?> GetByIdAsync(Guid id)
     {
         return await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public async Task AddAsync(Match match)
+    public async Task AddAsync(Match? match)
     {
         await champManRebornContext.Matches.AddAsync(match);
         await champManRebornContext.SaveChangesAsync();
@@ -25,7 +25,7 @@ public class MatchRepository(ChampManRebornContext champManRebornContext) : IMat
 
     public async Task UpdateAsync(Match match)
     {
-        var existingMatch = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == match.Id);
+        var existingMatch = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m != null && m.Id == match.Id);
         if (existingMatch == null)
         {
             return;
@@ -43,7 +43,7 @@ public class MatchRepository(ChampManRebornContext champManRebornContext) : IMat
 
     public async Task DeleteAsync(Guid id)
     {
-        var match = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == id);
+        var match = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m != null && m.Id == id);
         if (match != null)
         {
             champManRebornContext.Matches.Remove(match);
@@ -51,10 +51,10 @@ public class MatchRepository(ChampManRebornContext champManRebornContext) : IMat
         }
     }
 
-    public async Task<IEnumerable<Match>> GetMatchesByTeamIdAsync(Guid teamId)
+    public async Task<IEnumerable<Match?>> GetMatchesByTeamIdAsync(Guid teamId)
     {
         return await champManRebornContext.Matches
-            .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId)
+            .Where(m => m != null && (m.HomeTeamId == teamId || m.AwayTeamId == teamId))
             .ToListAsync();
     }
 }

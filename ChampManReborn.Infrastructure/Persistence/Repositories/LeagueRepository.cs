@@ -7,17 +7,17 @@ namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class LeagueRepository(ChampManRebornContext champManRebornContext) : ILeagueRepository
 {
-    public async Task<IEnumerable<League>> GetAllAsync()
+    public async Task<IEnumerable<League?>> GetAllAsync()
     {
         return await champManRebornContext.Leagues.ToListAsync();
     }
 
-    public async Task<League> GetByIdAsync(Guid id)
+    public async Task<League?> GetByIdAsync(Guid id)
     {
         return await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id);
     }
 
-    public async Task AddAsync(League league)
+    public async Task AddAsync(League? league)
     {
         await champManRebornContext.Leagues.AddAsync(league);
         await champManRebornContext.SaveChangesAsync();
@@ -25,7 +25,7 @@ public class LeagueRepository(ChampManRebornContext champManRebornContext) : ILe
 
     public async Task UpdateAsync(League league)
     {
-        var existingLeague = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == league.Id);
+        var existingLeague = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l != null && l.Id == league.Id);
         if (existingLeague == null)
         {
             return;
@@ -39,7 +39,7 @@ public class LeagueRepository(ChampManRebornContext champManRebornContext) : ILe
 
     public async Task DeleteAsync(Guid id)
     {
-        var league = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id);
+        var league = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l != null && l.Id == id);
         if (league != null)
         {
             champManRebornContext.Leagues.Remove(league);

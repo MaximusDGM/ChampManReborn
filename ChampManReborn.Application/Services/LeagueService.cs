@@ -13,17 +13,17 @@ public class LeagueService : ILeagueService
         _leagueRepository = leagueRepository;
     }
 
-    public async Task<IEnumerable<League>> GetAllLeaguesAsync()
+    public async Task<IEnumerable<League?>> GetAllLeaguesAsync()
     {
         return await _leagueRepository.GetAllAsync();
     }
 
-    public async Task<League> GetLeagueByIdAsync(Guid id)
+    public async Task<League?> GetLeagueByIdAsync(Guid id)
     {
         return await _leagueRepository.GetByIdAsync(id);
     }
 
-    public async Task AddLeagueAsync(League league)
+    public async Task AddLeagueAsync(League? league)
     {
         await _leagueRepository.AddAsync(league);
     }
