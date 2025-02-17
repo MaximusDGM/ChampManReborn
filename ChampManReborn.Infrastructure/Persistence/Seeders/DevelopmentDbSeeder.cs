@@ -1,5 +1,3 @@
-using ChampManReborn.Infrastructure.Persistence.Seeders;
-
 namespace ChampManReborn.Infrastructure.Seeders;
 
 public class DevelopmentDbSeeder(

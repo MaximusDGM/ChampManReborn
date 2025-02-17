@@ -1,6 +1,6 @@
 ﻿namespace ChampManReborn.Domain.Entities;
 
-public class League
+public abstract class League
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }

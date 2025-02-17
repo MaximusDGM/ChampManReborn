@@ -3,7 +3,7 @@ using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChampManReborn.Infrastructure.Persistence.Seeders;
+namespace ChampManReborn.Infrastructure.Seeders;
 
 public class PlayerSeeder(ChampManRebornContext dbContext)
 {
