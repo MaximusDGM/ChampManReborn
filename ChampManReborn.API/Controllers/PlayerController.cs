@@ -7,20 +7,13 @@ namespace ChampManReborn.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PlayerController : ControllerBase
+public class PlayerController(IPlayerService playerService) : ControllerBase
 {
-    private readonly IPlayerService _playerService;
-
-    public PlayerController(IPlayerService playerService)
-    {
-        _playerService = playerService;
-    }
-
     // Get all players
     [HttpGet]
     public async Task<IActionResult> GetAllPlayers()
     {
-        var players = await _playerService.GetAllPlayersAsync();
+        var players = await playerService.GetAllPlayersAsync();
 
         // Map Domain Model to DTO
         var playerDtos = players.Select(player => new PlayerDto
@@ -37,7 +30,7 @@ public class PlayerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPlayerById(Guid id)
     {
-        var player = await _playerService.GetPlayerByIdAsync(id);
+        var player = await playerService.GetPlayerByIdAsync(id);
         if (player == null)
         {
             return NotFound();
@@ -63,7 +56,7 @@ public class PlayerController : ControllerBase
             Age = createPlayerDto.Age,
         };
 
-        await _playerService.AddPlayerAsync(player);
+        await playerService.AddPlayerAsync(player);
         return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
     }
 
@@ -71,14 +64,14 @@ public class PlayerController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePlayer(Guid id, CreatePlayerDto updatePlayerDto)
     {
-        var player = await _playerService.GetPlayerByIdAsync(id);
+        var player = await playerService.GetPlayerByIdAsync(id);
 
         if (player == null) return NotFound();
 
         player.Name = updatePlayerDto.Name;
         player.Age = updatePlayerDto.Age;
 
-        await _playerService.UpdatePlayerAsync(player);
+        await playerService.UpdatePlayerAsync(player);
 
         return NoContent();
     }
@@ -87,11 +80,11 @@ public class PlayerController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlayer(Guid id)
     {
-        var player = await _playerService.GetPlayerByIdAsync(id);
+        var player = await playerService.GetPlayerByIdAsync(id);
 
         if (player == null) return NotFound();
 
-        await _playerService.DeletePlayerAsync(id);
+        await playerService.DeletePlayerAsync(id);
         return NoContent();
     }
 }
