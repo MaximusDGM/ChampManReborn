@@ -4,37 +4,60 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
-public class PlayerRepository(DbContext dbContext) : IPlayerRepository
+public class PlayerRepository : IPlayerRepository
 {
-    private readonly DbContext _dbContext = dbContext;
+    private readonly DbContext _dbContext;
 
-    public Task<IEnumerable<Player>> GetAllAsync()
+    public PlayerRepository(DbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
     }
 
-    public Task<Player> GetByIdAsync(Guid id)
+    public async Task<IEnumerable<Player>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Set<Player>().ToListAsync();
     }
 
-    public Task AddAsync(Player player)
+    public async Task<Player> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public Task UpdateAsync(Player player)
+    public async Task AddAsync(Player player)
     {
-        throw new NotImplementedException();
+        await _dbContext.Set<Player>().AddAsync(player);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task UpdateAsync(Player player)
     {
-        throw new NotImplementedException();
+        var existingPlayer = await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == player.Id);
+        if (existingPlayer == null)
+        {
+            return;
+        }
+
+        existingPlayer.Name = player.Name;
+        existingPlayer.Age = player.Age;
+
+        _dbContext.Set<Player>().Update(existingPlayer);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var player = await _dbContext.Set<Player>().FirstOrDefaultAsync(p => p.Id == id);
+        if (player != null)
+        {
+            _dbContext.Set<Player>().Remove(player);
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
+    {
+        return await _dbContext.Set<Player>()
+            .Where(p => p.Id == teamId)
+            .ToListAsync();
     }
 }

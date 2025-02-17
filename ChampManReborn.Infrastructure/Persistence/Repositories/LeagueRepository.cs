@@ -1,35 +1,49 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class LeagueRepository(ChampManRebornContext champManRebornContext) : ILeagueRepository
 {
-    private readonly ChampManRebornContext _champManRebornContext = champManRebornContext;
-
-    public Task<IEnumerable<League>> GetAllAsync()
+    public async Task<IEnumerable<League>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await champManRebornContext.Leagues.ToListAsync();
     }
 
-    public Task<League> GetByIdAsync(Guid id)
+    public async Task<League> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id);
     }
 
-    public Task AddAsync(League league)
+    public async Task AddAsync(League league)
     {
-        throw new NotImplementedException();
+        await champManRebornContext.Leagues.AddAsync(league);
+        await champManRebornContext.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(League league)
+    public async Task UpdateAsync(League league)
     {
-        throw new NotImplementedException();
+        var existingLeague = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == league.Id);
+        if (existingLeague == null)
+        {
+            return;
+        }
+
+        existingLeague.Name = league.Name;
+
+        champManRebornContext.Leagues.Update(existingLeague);
+        await champManRebornContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var league = await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id);
+        if (league != null)
+        {
+            champManRebornContext.Leagues.Remove(league);
+            await champManRebornContext.SaveChangesAsync();
+        }
     }
 }

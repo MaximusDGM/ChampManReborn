@@ -13,17 +13,17 @@ public class TeamService : ITeamService
         _teamRepository = teamRepository;
     }
 
-    public async Task<IEnumerable<Team>> GetAllTeamsAsync()
+    public async Task<IEnumerable<Team?>> GetAllTeamsAsync()
     {
         return await _teamRepository.GetAllAsync();
     }
 
-    public async Task<Team> GetTeamByIdAsync(Guid id)
+    public async Task<Team?> GetTeamByIdAsync(Guid id)
     {
         return await _teamRepository.GetByIdAsync(id);
     }
 
-    public async Task AddTeamAsync(Team team)
+    public async Task AddTeamAsync(Team? team)
     {
         await _teamRepository.AddAsync(team);
     }

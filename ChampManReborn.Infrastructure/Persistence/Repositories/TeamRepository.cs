@@ -1,40 +1,56 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class TeamRepository(ChampManRebornContext dbContext) : ITeamRepository
 {
-    private readonly ChampManRebornContext _dbContext = dbContext;
-
-    public Task<IEnumerable<Team>> GetAllAsync()
+    public async Task<IEnumerable<Team?>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await dbContext.Teams.ToListAsync();
     }
 
-    public Task<Team> GetByIdAsync(Guid id)
+    public async Task<Team?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await dbContext.Teams.FirstOrDefaultAsync(t => t.Id == id);
     }
 
-    public Task AddAsync(Team team)
+    public async Task AddAsync(Team? team)
     {
-        throw new NotImplementedException();
+        await dbContext.Teams.AddAsync(team);
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(Team team)
+    public async Task UpdateAsync(Team team)
     {
-        throw new NotImplementedException();
+        var existingTeam = await dbContext.Teams.FirstOrDefaultAsync(t => t.Id == team.Id);
+        if (existingTeam == null)
+        {
+            return;
+        }
+        
+        existingTeam.Name = team.Name;
+
+        dbContext.Teams.Update(existingTeam);
+        await dbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var team = await dbContext.Teams.FirstOrDefaultAsync(t => t.Id == id);
+        if (team != null)
+        {
+            dbContext.Teams.Remove(team);
+            await dbContext.SaveChangesAsync();
+        }
     }
 
-    public Task<IEnumerable<Team>> GetTeamsByLeagueIdAsync(Guid leagueId)
+    public async Task<IEnumerable<Team?>> GetTeamsByLeagueIdAsync(Guid leagueId)
     {
-        throw new NotImplementedException();
+        return await dbContext.Teams
+            .Where(t => t.Id == leagueId)
+            .ToListAsync();
     }
 }

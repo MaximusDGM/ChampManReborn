@@ -1,40 +1,60 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class MatchRepository(ChampManRebornContext champManRebornContext) : IMatchRepository
 {
-    private readonly ChampManRebornContext _champManRebornContext = champManRebornContext;
-
-    public Task<IEnumerable<Match>> GetAllAsync()
+    public async Task<IEnumerable<Match>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await champManRebornContext.Matches.ToListAsync();
     }
 
-    public Task<Match> GetByIdAsync(Guid id)
+    public async Task<Match> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public Task AddAsync(Match match)
+    public async Task AddAsync(Match match)
     {
-        throw new NotImplementedException();
+        await champManRebornContext.Matches.AddAsync(match);
+        await champManRebornContext.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(Match match)
+    public async Task UpdateAsync(Match match)
     {
-        throw new NotImplementedException();
+        var existingMatch = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == match.Id);
+        if (existingMatch == null)
+        {
+            return;
+        }
+
+        existingMatch.MatchDate = match.MatchDate;
+        existingMatch.HomeTeamId = match.HomeTeamId;
+        existingMatch.AwayTeamId = match.AwayTeamId;
+        existingMatch.HomeScore = match.HomeScore;
+        existingMatch.AwayScore = match.AwayScore;
+
+        champManRebornContext.Matches.Update(existingMatch);
+        await champManRebornContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var match = await champManRebornContext.Matches.FirstOrDefaultAsync(m => m.Id == id);
+        if (match != null)
+        {
+            champManRebornContext.Matches.Remove(match);
+            await champManRebornContext.SaveChangesAsync();
+        }
     }
 
-    public Task<IEnumerable<Match>> GetMatchesByTeamIdAsync(Guid teamId)
+    public async Task<IEnumerable<Match>> GetMatchesByTeamIdAsync(Guid teamId)
     {
-        throw new NotImplementedException();
+        return await champManRebornContext.Matches
+            .Where(m => m.HomeTeamId == teamId || m.AwayTeamId == teamId)
+            .ToListAsync();
     }
 }
