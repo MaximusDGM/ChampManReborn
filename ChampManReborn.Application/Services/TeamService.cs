@@ -4,41 +4,34 @@ using ChampManReborn.Domain.Entities;
 
 namespace ChampManReborn.Application.Services;
 
-public class TeamService : ITeamService
+public class TeamService(ITeamRepository teamRepository) : ITeamService
 {
-    private readonly ITeamRepository _teamRepository;
-
-    public TeamService(ITeamRepository teamRepository)
-    {
-        _teamRepository = teamRepository;
-    }
-
     public async Task<IEnumerable<Team?>> GetAllTeamsAsync()
     {
-        return await _teamRepository.GetAllAsync();
+        return await teamRepository.GetAllAsync();
     }
 
     public async Task<Team?> GetTeamByIdAsync(Guid id)
     {
-        return await _teamRepository.GetByIdAsync(id);
+        return await teamRepository.GetByIdAsync(id);
     }
 
     public async Task AddTeamAsync(Team? team)
     {
-        await _teamRepository.AddAsync(team);
+        await teamRepository.AddAsync(team);
     }
 
     public async Task UpdateTeamAsync(Team team)
     {
-        await _teamRepository.UpdateAsync(team);
+        await teamRepository.UpdateAsync(team);
     }
 
     public async Task DeleteTeamAsync(Guid id)
     {
-        var team = await _teamRepository.GetByIdAsync(id);
+        var team = await teamRepository.GetByIdAsync(id);
         if (team != null)
         {
-            await _teamRepository.DeleteAsync(id);
+            await teamRepository.DeleteAsync(id);
         }
     }
 }

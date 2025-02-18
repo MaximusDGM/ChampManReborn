@@ -4,41 +4,34 @@ using ChampManReborn.Domain.Entities;
 
 namespace ChampManReborn.Application.Services;
 
-public class LeagueService : ILeagueService
+public class LeagueService(ILeagueRepository leagueRepository) : ILeagueService
 {
-    private readonly ILeagueRepository _leagueRepository;
-
-    public LeagueService(ILeagueRepository leagueRepository)
-    {
-        _leagueRepository = leagueRepository;
-    }
-
     public async Task<IEnumerable<League?>> GetAllLeaguesAsync()
     {
-        return await _leagueRepository.GetAllAsync();
+        return await leagueRepository.GetAllAsync();
     }
 
     public async Task<League?> GetLeagueByIdAsync(Guid id)
     {
-        return await _leagueRepository.GetByIdAsync(id);
+        return await leagueRepository.GetByIdAsync(id);
     }
 
     public async Task AddLeagueAsync(League? league)
     {
-        await _leagueRepository.AddAsync(league);
+        await leagueRepository.AddAsync(league);
     }
 
     public async Task UpdateLeagueAsync(League league)
     {
-        await _leagueRepository.UpdateAsync(league);
+        await leagueRepository.UpdateAsync(league);
     }
 
     public async Task DeleteLeagueAsync(Guid id)
     {
-        var league = await _leagueRepository.GetByIdAsync(id);
+        var league = await leagueRepository.GetByIdAsync(id);
         if (league != null)
         {
-            await _leagueRepository.DeleteAsync(id);
+            await leagueRepository.DeleteAsync(id);
         }
     }
 }

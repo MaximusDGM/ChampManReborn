@@ -9,7 +9,6 @@ namespace ChampManReborn.API.Controllers;
 [Route("api/[controller]")]
 public class PlayerController(IPlayerService playerService) : ControllerBase
 {
-    // Get all players
     [HttpGet]
     public async Task<IActionResult> GetAllPlayers()
     {
@@ -26,7 +25,6 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return Ok(playerDtos);
     }
 
-    // Get a player by ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPlayerById(Guid id)
     {
@@ -46,7 +44,6 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return Ok(playerDto);
     }
 
-    // Add a player
     [HttpPost]
     public async Task<IActionResult> CreatePlayer(CreatePlayerDto createPlayerDto)
     {
@@ -60,7 +57,6 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
     }
 
-    // Update a player
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePlayer(Guid id, CreatePlayerDto updatePlayerDto)
     {
@@ -76,7 +72,6 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return NoContent();
     }
 
-    // Delete a player
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlayer(Guid id)
     {

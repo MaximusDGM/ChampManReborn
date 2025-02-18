@@ -4,6 +4,7 @@ public class DevelopmentDbSeeder(
     PlayerSeeder playerSeeder,
     TeamSeeder teamSeeder,
     MatchSeeder matchSeeder,
+    LeagueSeeder leagueSeeder,
     ILogger<DevelopmentDbSeeder> logger)
 {
     public async Task SeedDatabaseAsync()
@@ -18,6 +19,9 @@ public class DevelopmentDbSeeder(
 
         await matchSeeder.SeedMatchesAsync();
         logger.LogInformation("Fixtures seeded.");
+        
+        await leagueSeeder.SeedLeaguesAsync();
+        logger.LogInformation("Leagues seeded.");
 
         logger.LogInformation("Database seeding completed.");
     }

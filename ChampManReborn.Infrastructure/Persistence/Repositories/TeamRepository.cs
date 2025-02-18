@@ -1,6 +1,6 @@
 ﻿using ChampManReborn.Application.Contracts.Persistence;
 using ChampManReborn.Domain.Entities;
-using ChampManReborn.Infrastructure.Persistence.Contexts;
+using ChampManReborn.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChampManReborn.Infrastructure.Persistence.Repositories;
