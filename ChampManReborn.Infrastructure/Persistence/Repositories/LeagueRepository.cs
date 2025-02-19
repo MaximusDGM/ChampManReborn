@@ -7,14 +7,14 @@ namespace ChampManReborn.Infrastructure.Persistence.Repositories;
 
 public class LeagueRepository(ChampManRebornContext champManRebornContext) : ILeagueRepository
 {
-    public async Task<IEnumerable<League?>> GetAllAsync()
+    public async Task<IEnumerable<League>> GetAllAsync()
     {
         return await champManRebornContext.Leagues.ToListAsync();
     }
 
-    public async Task<League?> GetByIdAsync(Guid id)
+    public async Task<League> GetByIdAsync(Guid id)
     {
-        return await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id);
+        return await champManRebornContext.Leagues.FirstOrDefaultAsync(l => l.Id == id) ?? throw new InvalidOperationException();
     }
 
     public async Task AddAsync(League? league)

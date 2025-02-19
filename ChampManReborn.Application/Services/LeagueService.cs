@@ -6,17 +6,17 @@ namespace ChampManReborn.Application.Services;
 
 public class LeagueService(ILeagueRepository leagueRepository) : ILeagueService
 {
-    public async Task<IEnumerable<League?>> GetAllLeaguesAsync()
+    public async Task<IEnumerable<League>> GetAllLeaguesAsync()
     {
         return await leagueRepository.GetAllAsync();
     }
 
-    public async Task<League?> GetLeagueByIdAsync(Guid id)
+    public async Task<League> GetLeagueByIdAsync(Guid id)
     {
         return await leagueRepository.GetByIdAsync(id);
     }
 
-    public async Task AddLeagueAsync(League? league)
+    public async Task AddLeagueAsync(League league)
     {
         await leagueRepository.AddAsync(league);
     }
