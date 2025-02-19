@@ -15,15 +15,20 @@ public class StaffController(IStaffService staffService) : ControllerBase
         var staffList = await staffService.GetAllStaffAsync();
 
         var staffDtos = staffList
-            .Select(staff => new StaffDto
+            .Select(staff =>
             {
-                Id = staff.Id,
-                FirstName = staff.FirstName,
-                SecondName = staff.SecondName,
-                CommonName = staff.CommonName,
-                Age = staff.DateOfBirth.HasValue
-                    ? DateTime.UtcNow.Year - staff.DateOfBirth.Value.Year
-                    : null
+                if (staff != null)
+                    return new StaffDto
+                    {
+                        Id = staff.Id,
+                        FirstName = staff.FirstName,
+                        SecondName = staff.SecondName,
+                        CommonName = staff.CommonName,
+                        Age = staff.DateOfBirth.HasValue
+                            ? DateTime.UtcNow.Year - staff.DateOfBirth.Value.Year
+                            : null
+                    };
+                return null;
             });
 
         return Ok(staffDtos);

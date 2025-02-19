@@ -16,11 +16,16 @@ public class TeamController(ITeamService teamService) : ControllerBase
 
         var teamDtos = teams
             .Where(team => team != null)
-            .Select(team => new TeamDto
+            .Select(team =>
             {
-                Id = team.Id,
-                Name = team.Name,
-                Stadium = team.Stadium
+                if (team != null)
+                    return new TeamDto
+                    {
+                        Id = team.Id,
+                        Name = team.Name,
+                        Stadium = team.Stadium
+                    };
+                return null;
             });
 
         return Ok(teamDtos);

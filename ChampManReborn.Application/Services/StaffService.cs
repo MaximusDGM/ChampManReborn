@@ -6,12 +6,12 @@ namespace ChampManReborn.Application.Services;
 
 public class StaffService(IStaffRepository staffRepository) : IStaffService
 {
-    public async Task<IEnumerable<Staff>> GetAllStaffAsync()
+    public async Task<IEnumerable<Staff?>> GetAllStaffAsync()
     {
         return await staffRepository.GetAllAsync();
     }
 
-    public async Task<Staff> GetStaffByIdAsync(Guid id)
+    public async Task<Staff?> GetStaffByIdAsync(Guid id)
     {
         return await staffRepository.GetByIdAsync(id);
     }

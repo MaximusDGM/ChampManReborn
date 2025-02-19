@@ -9,6 +9,6 @@ public class TeamDto
 
 public class CreateTeamDto
 {
-    public string Name { get; set; } = string.Empty;
-    public string? Stadium { get; set; }
+    public required string Name { get; set; }
+    public required string Stadium { get; set; }
 }

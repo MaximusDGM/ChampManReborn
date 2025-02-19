@@ -7,12 +7,12 @@ namespace ChampManReborn.Infrastructure.Repositories;
 
 public class StaffRepository(ChampManRebornContext champManRebornContext) : IStaffRepository
 {
-    public async Task<IEnumerable<Staff>> GetAllAsync()
+    public async Task<IEnumerable<Staff?>> GetAllAsync()
     {
         return await champManRebornContext.Staff.ToListAsync();
     }
 
-    public async Task<Staff> GetByIdAsync(Guid id)
+    public async Task<Staff?> GetByIdAsync(Guid id)
     {
         return await champManRebornContext.Staff.FirstOrDefaultAsync(s => s.Id == id) ?? throw new InvalidOperationException();
     }

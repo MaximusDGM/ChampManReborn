@@ -7,12 +7,12 @@ namespace ChampManReborn.Infrastructure.Repositories;
 
 public class NationRepository(ChampManRebornContext champManRebornContext) : INationRepository
 {
-    public async Task<IEnumerable<Nation>> GetAllAsync()
+    public async Task<IEnumerable<Nation?>> GetAllAsync()
     {
         return await champManRebornContext.Nations.ToListAsync();
     }
 
-    public async Task<Nation> GetByIdAsync(Guid id)
+    public async Task<Nation?> GetByIdAsync(Guid id)
     {
         return await champManRebornContext.Nations.FirstOrDefaultAsync(n => n.Id == id) ?? throw new InvalidOperationException();
     }
@@ -23,7 +23,7 @@ public class NationRepository(ChampManRebornContext champManRebornContext) : INa
         await champManRebornContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Nation nation)
+    public async Task UpdateAsync(Nation? nation)
     {
         var existingNation = await champManRebornContext.Nations.FirstOrDefaultAsync(n => n.Id == nation.Id);
         if (existingNation == null)

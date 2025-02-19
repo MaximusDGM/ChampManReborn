@@ -6,12 +6,12 @@ namespace ChampManReborn.Application.Services;
 
 public class NationService(INationRepository nationRepository) : INationService
 {
-    public async Task<IEnumerable<Nation>> GetAllNationsAsync()
+    public async Task<IEnumerable<Nation?>> GetAllNationsAsync()
     {
         return await nationRepository.GetAllAsync();
     }
 
-    public async Task<Nation> GetNationByIdAsync(Guid id)
+    public async Task<Nation?> GetNationByIdAsync(Guid id)
     {
         return await nationRepository.GetByIdAsync(id);
     }
@@ -21,7 +21,7 @@ public class NationService(INationRepository nationRepository) : INationService
         await nationRepository.AddAsync(nation);
     }
 
-    public async Task UpdateNationAsync(Nation nation)
+    public async Task UpdateNationAsync(Nation? nation)
     {
         await nationRepository.UpdateAsync(nation);
     }
