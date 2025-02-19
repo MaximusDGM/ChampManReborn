@@ -83,4 +83,15 @@ public class StaffController(IStaffService staffService) : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteStaff(Guid id)
+    {
+        var nation = await staffService.GetStaffByIdAsync(id);
+
+        if (nation == null)
+            return NotFound();
+
+        await staffService.DeleteStaffAsync(id);
+        return NoContent();
+    }
 }
