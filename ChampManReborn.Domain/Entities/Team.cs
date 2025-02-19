@@ -5,19 +5,13 @@ public class Team
     public Guid Id { get; set; }
     public required string Name { get; set; }
     public required string Stadium { get; set; }
-    public int Cash { get; set; }
     public bool OwnStadium { get; set; }
     public string? ReserveStadium { get; set; }
-    public DayOfWeek HomeMatchDay { get; set; }
     public int Attendance { get; set; }
     public int MinAttendance { get; set; }
     public int MaxAttendance { get; set; }
     public bool Training { get; set; }
     public short Reputation { get; set; }
-    public string? Plc { get; set; }
-    public ColorScheme TeamColor1 { get; set; } = new();
-    public ColorScheme TeamColor2 { get; set; } = new();
-    public ColorScheme TeamColor3 { get; set; } = new();
     public Guid? ChairmanId { get; set; }
     public Staff? Chairman { get; set; }
     public List<Staff> Directors { get; set; } = [];
@@ -34,10 +28,4 @@ public class Team
     public List<Staff> FavouriteStaff { get; set; } = [];
     public List<Staff> DislikedStaff { get; set; } = [];
     public List<Team> RivalClubs { get; set; } = [];
-    
-    public class ColorScheme
-    {
-        public int ForegroundColor { get; set; }
-        public int BackgroundColor { get; set; }
-    }
 }
