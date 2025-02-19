@@ -14,12 +14,20 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
     {
         var players = await playerService.GetAllPlayersAsync();
 
-        var playerDtos = players.Select(player => new PlayerDto
-        {
-            Id = ((Person)player).Id,
-            Name = player.Name,
-            Age = player.Age,
-        });
+        var playerDtos = players
+            .Where(player => player != null)
+            .Select(player =>
+            {
+                if (player != null)
+                    return new PlayerDto
+                    {
+                        Id = player.Id,
+                        Name = player.Name,
+                        Age = player.Age
+                    };
+                return null;
+            });
+
 
         return Ok(playerDtos);
     }
@@ -61,7 +69,8 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
     {
         var player = await playerService.GetPlayerByIdAsync(id);
 
-        if (player == null) return NotFound();
+        if (player == null) 
+            return NotFound();
 
         player.Name = updatePlayerDto.Name;
         player.Age = updatePlayerDto.Age;

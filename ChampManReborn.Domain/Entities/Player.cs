@@ -2,7 +2,7 @@
 
 public class Player : Person
 {
-    public new int Id { get; set; }
+    public new Guid Id { get; set; }
     public int SquadNumber { get; set; }
     public int CurrentAbility { get; set; }
     public int PotentialAbility { get; set; }

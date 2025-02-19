@@ -6,22 +6,22 @@ namespace ChampManReborn.Application.Services;
 
 public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
 {
-    public async Task<IEnumerable<Player>> GetAllPlayersAsync()
+    public async Task<IEnumerable<Player?>> GetAllPlayersAsync()
     {
         return await playerRepository.GetAllAsync();
     }
 
-    public async Task<Player> GetPlayerByIdAsync(Guid id)
+    public async Task<Player?> GetPlayerByIdAsync(Guid id)
     {
         return await playerRepository.GetByIdAsync(id);
     }
 
-    public async Task AddPlayerAsync(Player player)
+    public async Task AddPlayerAsync(Player? player)
     {
         await playerRepository.AddAsync(player);
     }
 
-    public async Task UpdatePlayerAsync(Player player)
+    public async Task UpdatePlayerAsync(Player? player)
     {
         await playerRepository.UpdateAsync(player);
     }

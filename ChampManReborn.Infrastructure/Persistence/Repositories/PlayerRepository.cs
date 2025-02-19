@@ -3,27 +3,27 @@ using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChampManReborn.Infrastructure.Persistence.Repositories;
+namespace ChampManReborn.Infrastructure.Repositories;
 
 public class PlayerRepository(ChampManRebornContext dbContext) : IPlayerRepository
 {
-    public async Task<IEnumerable<Player>> GetAllAsync()
+    public async Task<IEnumerable<Player?>> GetAllAsync()
     {
         return await dbContext.Players.ToListAsync();
     }
 
     public async Task<Player?> GetByIdAsync(Guid id)
     {
-        return await dbContext.Players.FindAsync(id);
+        return await dbContext.Players.FindAsync(id) ?? throw new KeyNotFoundException($"Player with ID {id} was not found.");
     }
 
-    public async Task AddAsync(Player player)
+    public async Task AddAsync(Player? player)
     {
         await dbContext.Players.AddAsync(player);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Player player)
+    public async Task UpdateAsync(Player? player)
     {
         dbContext.Players.Update(player);
         await dbContext.SaveChangesAsync();
@@ -39,7 +39,7 @@ public class PlayerRepository(ChampManRebornContext dbContext) : IPlayerReposito
         }
     }
 
-    public async Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
+    public async Task<IEnumerable<Player?>> GetPlayersByTeamIdAsync(Guid teamId)
     {
         return await dbContext.Players.Where(p => ((Person)p).Id == teamId).ToListAsync();
     }
