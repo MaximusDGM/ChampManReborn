@@ -14,10 +14,9 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
     {
         var players = await playerService.GetAllPlayersAsync();
 
-        // Map Domain Model to DTO
         var playerDtos = players.Select(player => new PlayerDto
         {
-            Id = player.Id,
+            Id = ((Person)player).Id,
             Name = player.Name,
             Age = player.Age,
         });
@@ -25,7 +24,7 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return Ok(playerDtos);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetPlayerById(Guid id)
     {
         var player = await playerService.GetPlayerByIdAsync(id);
@@ -36,7 +35,7 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
 
         var playerDto = new PlayerDto
         {
-            Id = player.Id,
+            Id = ((Person)player).Id,
             Name = player.Name,
             Age = player.Age,
         };
@@ -54,10 +53,10 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         };
 
         await playerService.AddPlayerAsync(player);
-        return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
+        return CreatedAtAction(nameof(GetPlayerById), new { id = ((Person)player).Id }, player);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdatePlayer(Guid id, CreatePlayerDto updatePlayerDto)
     {
         var player = await playerService.GetPlayerByIdAsync(id);
@@ -72,7 +71,7 @@ public class PlayerController(IPlayerService playerService) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeletePlayer(Guid id)
     {
         var player = await playerService.GetPlayerByIdAsync(id);

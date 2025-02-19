@@ -41,6 +41,6 @@ public class PlayerRepository(ChampManRebornContext dbContext) : IPlayerReposito
 
     public async Task<IEnumerable<Player>> GetPlayersByTeamIdAsync(Guid teamId)
     {
-        return await dbContext.Players.Where(p => p.Id == teamId).ToListAsync();
+        return await dbContext.Players.Where(p => ((Person)p).Id == teamId).ToListAsync();
     }
 }
