@@ -11,5 +11,5 @@ public class Nation
     public int? CapitalCity { get; set; }
     public short NumberClubs { get; set; }
     public int NumberStaff { get; set; }
-    public short Reputation { get; set; }
+    public int Reputation { get; set; }
 }

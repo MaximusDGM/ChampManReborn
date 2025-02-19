@@ -1,28 +1,19 @@
-using ChampManReborn.API.DTOs;
-using ChampManReborn.Application.Contracts.Services;
-using ChampManReborn.Domain.Entities;
+using ChampManReborn.Application.Contracts.DTOs;
+using ChampManReborn.Mediator.Commands.Nation;
+using ChampManReborn.Mediator.Queries.Nation;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChampManReborn.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class NationController(INationService nationService) : ControllerBase
+public class NationController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllNations()
     {
-        var nations = await nationService.GetAllNationsAsync();
-
-        var nationDtos = nations
-            .Where(nation => nation != null)
-            .Select(nation => new NationDto
-            {
-                Id = nation.Id,
-                Name = nation.Name,
-                Continent = nation.Continent,
-                Reputation = nation.Reputation
-            });
+        var nationDtos = await mediator.Send(new GetAllNationsQuery());
 
         return Ok(nationDtos);
     }
@@ -30,18 +21,10 @@ public class NationController(INationService nationService) : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetNationById(Guid id)
     {
-        var nation = await nationService.GetNationByIdAsync(id);
+        var nationDto = await mediator.Send(new GetNationByIdQuery(id));
 
-        if (nation == null)
+        if (nationDto == null)
             return NotFound();
-
-        var nationDto = new NationDto
-        {
-            Id = nation.Id,
-            Name = nation.Name,
-            Continent = nation.Continent,
-            Reputation = nation.Reputation
-        };
 
         return Ok(nationDto);
     }
@@ -49,30 +32,18 @@ public class NationController(INationService nationService) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNation(CreateNationDto createNationDto)
     {
-        var nation = new Nation
-        {
-            Name = createNationDto.Name,
-            Continent = createNationDto.Continent,
-            Reputation = createNationDto.Reputation
-        };
+        var nationId = await mediator.Send(new CreateNationCommand(createNationDto));
 
-        await nationService.AddNationAsync(nation);
-        return CreatedAtAction(nameof(GetNationById), new { id = nation.Id }, nation);
+        return CreatedAtAction(nameof(GetNationById), new { id = nationId }, createNationDto);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateNation(Guid id, CreateNationDto updateNationDto)
     {
-        var nation = await nationService.GetNationByIdAsync(id);
+        var success = await mediator.Send(new UpdateNationCommand(id, updateNationDto));
 
-        if (nation == null)
+        if (!success)
             return NotFound();
-
-        nation.Name = updateNationDto.Name;
-        nation.Continent = updateNationDto.Continent;
-        nation.Reputation = updateNationDto.Reputation;
-
-        await nationService.UpdateNationAsync(nation);
 
         return NoContent();
     }
@@ -80,12 +51,11 @@ public class NationController(INationService nationService) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteNation(Guid id)
     {
-        var nation = await nationService.GetNationByIdAsync(id);
+        var success = await mediator.Send(new DeleteNationCommand(id));
 
-        if (nation == null)
+        if (!success)
             return NotFound();
 
-        await nationService.DeleteNationAsync(id);
         return NoContent();
     }
 }

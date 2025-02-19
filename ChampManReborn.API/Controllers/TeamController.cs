@@ -1,4 +1,4 @@
-using ChampManReborn.API.DTOs;
+using ChampManReborn.Application.Contracts.DTOs;
 using ChampManReborn.Application.Contracts.Services;
 using ChampManReborn.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

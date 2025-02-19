@@ -1,4 +1,4 @@
-namespace ChampManReborn.API.DTOs;
+namespace ChampManReborn.Application.Contracts.DTOs;
 
 public class StaffDto
 {
