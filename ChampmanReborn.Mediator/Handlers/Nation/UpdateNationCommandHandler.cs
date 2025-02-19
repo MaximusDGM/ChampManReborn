@@ -10,12 +10,9 @@ public class UpdateNationCommandHandler(INationService nationService) : IRequest
     {
         var nation = await nationService.GetNationByIdAsync(request.Id);
 
-        if (nation == null)
-            return false;
-
-        nation.Name = request.Name;
-        nation.Continent = Convert.ToInt32(request.Continent);
-        nation.Reputation = request.Reputation;
+        nation.Name = request.UpdateNationDto.Name;
+        nation.Continent = request.UpdateNationDto.Continent;
+        nation.Reputation = request.UpdateNationDto.Reputation;
 
         await nationService.UpdateNationAsync(nation);
 

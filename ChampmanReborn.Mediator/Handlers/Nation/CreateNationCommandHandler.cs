@@ -8,14 +8,17 @@ public class CreateNationCommandHandler(INationService nationService) : IRequest
 {
     public async Task<Guid> Handle(CreateNationCommand request, CancellationToken cancellationToken)
     {
+        var dto = request.CreateNationDto;
+
         var nation = new Domain.Entities.Nation
         {
-            Name = request.Name,
-            Continent = Convert.ToInt32(request.Continent),
-            Reputation = request.Reputation
+            Name = dto.Name,
+            Continent = dto.Continent,
+            Reputation = dto.Reputation
         };
 
         await nationService.AddNationAsync(nation);
+        
         return nation.Id;
     }
 }

@@ -23,9 +23,6 @@ public class NationController(IMediator mediator) : ControllerBase
     {
         var nationDto = await mediator.Send(new GetNationByIdQuery(id));
 
-        if (nationDto == null)
-            return NotFound();
-
         return Ok(nationDto);
     }
 
