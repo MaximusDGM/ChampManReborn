@@ -3,7 +3,7 @@ using ChampManReborn.Domain.Entities;
 using ChampManReborn.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChampManReborn.Infrastructure.Persistence.Repositories;
+namespace ChampManReborn.Infrastructure.Repositories;
 
 public class MatchRepository(ChampManRebornContext champManRebornContext) : IMatchRepository
 {
