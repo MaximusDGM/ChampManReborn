@@ -5,11 +5,19 @@ public class DevelopmentDbSeeder(
     TeamSeeder teamSeeder,
     MatchSeeder matchSeeder,
     LeagueSeeder leagueSeeder,
+    NationSeeder nationSeeder,
+    StaffSeeder staffSeeder,
     ILogger<DevelopmentDbSeeder> logger)
 {
     public async Task SeedDatabaseAsync()
     {
         logger.LogInformation("Starting to seed the database...");
+        
+        await nationSeeder.SeedNationsAsync();
+        logger.LogInformation("Nations seeded.");
+
+        await staffSeeder.SeedStaffsAsync();
+        logger.LogInformation("Staff seeded.");
 
         await teamSeeder.SeedTeamsAsync();
         logger.LogInformation("Teams seeded.");
