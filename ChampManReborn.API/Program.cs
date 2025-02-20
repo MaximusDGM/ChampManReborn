@@ -28,7 +28,6 @@ if (app.Environment.IsDevelopment())
 // Apply seeder logic
 await app.Services.ApplySeederLogicAsync(app.Environment);
 
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
