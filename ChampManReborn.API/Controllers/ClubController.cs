@@ -79,7 +79,7 @@ public class ClubController(IClubService clubService) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Deleteclub(Guid id)
+    public async Task<IActionResult> DeleteClub(Guid id)
     {
         var club = await clubService.GetClubByIdAsync(id);
 
