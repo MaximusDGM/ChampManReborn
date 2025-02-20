@@ -1,102 +1,57 @@
-using ChampManReborn.Application.Contracts.DTOs;
-using ChampManReborn.Application.Contracts.Services;
-using ChampManReborn.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ChampManReborn.Application.Contracts.DTOs;
+using ChampManReborn.Mediator.Commands.Staff;
+using ChampManReborn.Mediator.Queries.Staff;
 
 namespace ChampManReborn.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class StaffController(IStaffService staffService) : ControllerBase
+public class StaffController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllStaff()
     {
-        var staffList = await staffService.GetAllStaffAsync();
-
-        var staffDtos = staffList
-            .Select(staff =>
-            {
-                if (staff != null)
-                    return new StaffDto
-                    {
-                        Id = staff.Id,
-                        FirstName = staff.FirstName,
-                        SecondName = staff.SecondName,
-                        CommonName = staff.CommonName,
-                        Age = staff.DateOfBirth.HasValue
-                            ? DateTime.UtcNow.Year - staff.DateOfBirth.Value.Year
-                            : null
-                    };
-                return null;
-            });
-
+        var staffDtos = await mediator.Send(new GetAllStaffQuery());
         return Ok(staffDtos);
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetStaffById(Guid id)
     {
-        var staff = await staffService.GetStaffByIdAsync(id);
-
-        if (staff == null)
-            return NotFound();
-
-        var staffDto = new StaffDto
-        {
-            Id = staff.Id,
-            FirstName = staff.FirstName,
-            SecondName = staff.SecondName,
-            CommonName = staff.CommonName,
-            Age = staff.DateOfBirth.HasValue
-                ? DateTime.UtcNow.Year - staff.DateOfBirth.Value.Year
-                : null
-        };
-
+        var staffDto = await mediator.Send(new GetStaffByIdQuery(id));
         return Ok(staffDto);
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateStaff(CreateStaffDto createStaffDto)
     {
-        var staff = new Staff
-        {
-            FirstName = createStaffDto.FirstName,
-            SecondName = createStaffDto.SecondName,
-            CommonName = createStaffDto.CommonName,
-            Name = createStaffDto.FirstName + " " + createStaffDto.SecondName
-        };
+        var command = new CreateStaffCommand(
+            createStaffDto.FirstName, 
+            createStaffDto.SecondName, 
+            createStaffDto.CommonName);
 
-        await staffService.AddStaffAsync(staff);
-        return CreatedAtAction(nameof(GetStaffById), new { id = staff.Id }, staff);
+        var id = await mediator.Send(command);
+        return CreatedAtAction(nameof(GetStaffById), new { id }, null);
     }
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateStaff(Guid id, CreateStaffDto updateStaffDto)
     {
-        var staff = await staffService.GetStaffByIdAsync(id);
+        var command = new UpdateStaffCommand(id,
+            updateStaffDto.FirstName, 
+            updateStaffDto.SecondName, 
+            updateStaffDto.CommonName);
 
-        if (staff == null)
-            return NotFound();
-
-        staff.FirstName = updateStaffDto.FirstName;
-        staff.SecondName = updateStaffDto.SecondName;
-        staff.CommonName = updateStaffDto.CommonName;
-
-        await staffService.UpdateStaffAsync(staff);
-
+        await mediator.Send(command);
         return NoContent();
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteStaff(Guid id)
     {
-        var nation = await staffService.GetStaffByIdAsync(id);
-
-        if (nation == null)
-            return NotFound();
-
-        await staffService.DeleteStaffAsync(id);
+        await mediator.Send(new DeleteStaffCommand(id));
         return NoContent();
     }
 }
