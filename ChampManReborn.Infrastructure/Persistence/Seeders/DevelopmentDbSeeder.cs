@@ -2,7 +2,7 @@ namespace ChampManReborn.Infrastructure.Seeders;
 
 public class DevelopmentDbSeeder(
     PlayerSeeder playerSeeder,
-    TeamSeeder teamSeeder,
+    ClubSeeder clubSeeder,
     MatchSeeder matchSeeder,
     LeagueSeeder leagueSeeder,
     NationSeeder nationSeeder,
@@ -19,8 +19,8 @@ public class DevelopmentDbSeeder(
         await staffSeeder.SeedStaffsAsync();
         logger.LogInformation("Staff seeded.");
 
-        await teamSeeder.SeedTeamsAsync();
-        logger.LogInformation("Teams seeded.");
+        await clubSeeder.SeedTeamsAsync();
+        logger.LogInformation("Clubs seeded.");
 
         await playerSeeder.SeedPlayersAsync();
         logger.LogInformation("Players seeded.");

@@ -7,7 +7,7 @@ public static class SeederServiceRegistration
     public static IServiceCollection AddSeederServices(this IServiceCollection services)
     {
         services.AddScoped<PlayerSeeder>();
-        services.AddScoped<TeamSeeder>();
+        services.AddScoped<ClubSeeder>();
         services.AddScoped<MatchSeeder>();
         services.AddScoped<LeagueSeeder>();
         services.AddScoped<DevelopmentDbSeeder>();

@@ -13,7 +13,7 @@ public static class PersistenceServiceRegistration
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IPlayerRepository, PlayerRepository>();
-        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<IClubRepository, ClubRepository>();
         services.AddScoped<IMatchRepository, MatchRepository>();
         services.AddScoped<ILeagueRepository, LeagueRepository>();
 

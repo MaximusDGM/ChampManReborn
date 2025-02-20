@@ -10,7 +10,7 @@ public static class ApplicationServiceRegistration
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IPlayerService, PlayerService>();
-        services.AddScoped<ITeamService, TeamService>();
+        services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IMatchService, MatchService>();
         services.AddScoped<ILeagueService, LeagueService>();
 

@@ -1,6 +1,6 @@
 ﻿namespace ChampManReborn.Domain.Entities;
 
-public class Team
+public class Club
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
@@ -27,5 +27,5 @@ public class Team
     public Nation? Nation { get; set; }
     public List<Staff> FavouriteStaff { get; set; } = [];
     public List<Staff> DislikedStaff { get; set; } = [];
-    public List<Team> RivalClubs { get; set; } = [];
+    public List<Club> RivalClubs { get; set; } = [];
 }

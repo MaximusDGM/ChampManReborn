@@ -17,13 +17,10 @@
     <ItemGroup>
       <Folder Include="Commands\Player\" />
       <Folder Include="Commands\Staff\" />
-      <Folder Include="Commands\Team\" />
       <Folder Include="Handlers\Player\" />
       <Folder Include="Handlers\Staff\" />
-      <Folder Include="Handlers\Team\" />
       <Folder Include="Queries\Player\" />
       <Folder Include="Queries\Staff\" />
-      <Folder Include="Queries\Team\" />
     </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ public class MatchSeeder(ChampManRebornContext dbContext)
         if (await dbContext.Matches.AnyAsync())
             return;
 
-        var teams = await dbContext.Teams.ToListAsync();
+        var teams = await dbContext.Clubs.ToListAsync();
         if (teams.Count < 2)
             throw new InvalidOperationException("At least 2 teams are required for matches.");
 
