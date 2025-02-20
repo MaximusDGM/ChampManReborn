@@ -16,11 +16,8 @@ public class GetAllStaffHandler(IStaffService staffService) : IRequestHandler<Ge
             {
                 Id = staff.Id,
                 FirstName = staff.FirstName,
-                SecondName = staff.SecondName,
-                CommonName = staff.CommonName,
-                Age = staff.DateOfBirth.HasValue
-                    ? DateTime.UtcNow.Year - staff.DateOfBirth.Value.Year
-                    : null
+                LastName = staff.LastName,
+                Age = staff.Age
             });
     }
 }

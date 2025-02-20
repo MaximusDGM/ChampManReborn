@@ -32,8 +32,7 @@ public class StaffRepository(ChampManRebornContext champManRebornContext) : ISta
         }
 
         existingStaff.FirstName = staff.FirstName;
-        existingStaff.SecondName = staff.SecondName;
-        existingStaff.CommonName = staff.CommonName;
+        existingStaff.LastName = staff.LastName;
 
         champManRebornContext.Staff.Update(existingStaff);
         await champManRebornContext.SaveChangesAsync();

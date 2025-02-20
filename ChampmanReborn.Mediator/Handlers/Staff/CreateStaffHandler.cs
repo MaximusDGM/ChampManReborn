@@ -11,9 +11,7 @@ public class CreateStaffHandler(IStaffService staffService) : IRequestHandler<Cr
         var staff = new Domain.Entities.Staff
         {
             FirstName = request.FirstName,
-            SecondName = request.SecondName,
-            CommonName = request.CommonName,
-            Name = request.FirstName + " " + request.SecondName
+            LastName = request.LastName,
         };
 
         await staffService.AddStaffAsync(staff);

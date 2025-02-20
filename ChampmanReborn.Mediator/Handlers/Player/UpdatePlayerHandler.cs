@@ -11,7 +11,7 @@ public class UpdatePlayerHandler(IPlayerService playerService) : IRequestHandler
         var player = await playerService.GetPlayerByIdAsync(request.Id);
         if (player == null) throw new KeyNotFoundException();
 
-        player.Name = request.Name;
+        player.FirstName = request.FirstName;
         player.Age = request.Age;
 
         await playerService.UpdatePlayerAsync(player);

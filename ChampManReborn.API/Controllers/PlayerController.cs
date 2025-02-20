@@ -43,7 +43,7 @@ public class PlayerController(IMediator mediator) : ControllerBase
         var command = new UpdatePlayerCommand
         {
             Id = id,
-            Name = updatePlayerDto.Name,
+            FirstName = updatePlayerDto.Name,
             Age = updatePlayerDto.Age
         };
 

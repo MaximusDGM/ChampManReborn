@@ -16,7 +16,7 @@ public class GetAllPlayersHandler(IPlayerService playerService)
             .Select(player => new PlayerDto
             {
                 Id = player.Id,
-                Name = player.Name,
+                FirstName = player.FirstName,
                 Age = player.Age
             });
     }

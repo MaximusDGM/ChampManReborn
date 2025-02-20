@@ -2,11 +2,6 @@ namespace ChampManReborn.Domain.Entities;
 
 public class Staff : Person
 {
-    public string? FirstName { get; set; }
-    public string? SecondName { get; set; }
-    public string? CommonName { get; set; }
-    public DateTime? DateOfBirth { get; set; }
-    public int? YearOfBirth { get; set; }
     public Nation? Nation { get; set; }
     public Nation? SecondNation { get; set; }
     public int Adaptability { get; set; }

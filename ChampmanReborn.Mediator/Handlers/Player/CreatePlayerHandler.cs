@@ -10,8 +10,9 @@ public class CreatePlayerHandler(IPlayerService playerService) : IRequestHandler
     {
         var player = new Domain.Entities.Player
         {
-            Name = request.Name,
-            Age = request.Age
+            Age = request.Age,
+            FirstName = request.Name,
+            LastName = request.Name,
         };
 
         await playerService.AddPlayerAsync(player);

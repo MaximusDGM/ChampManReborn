@@ -2,9 +2,9 @@ using MediatR;
 
 namespace ChampManReborn.Mediator.Commands.Staff;
 
-public class CreateStaffCommand(string firstName, string secondName, string commonName) : IRequest<Guid>
+public class CreateStaffCommand(string firstName, string lastName, string commonName) : IRequest<Guid>
 {
     public string FirstName { get; set; } = firstName;
-    public string SecondName { get; set; } = secondName;
+    public string LastName { get; set; } = lastName;
     public string CommonName { get; set; } = commonName;
 }

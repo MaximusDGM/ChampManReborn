@@ -14,7 +14,7 @@ public class GetPlayerByIdHandler(IPlayerService playerService) : IRequestHandle
         return new PlayerDto
         {
             Id = player.Id,
-            Name = player.Name,
+            FirstName = player.FirstName,
             Age = player.Age
         };
     }

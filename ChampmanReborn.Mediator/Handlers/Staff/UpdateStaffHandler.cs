@@ -13,8 +13,7 @@ public class UpdateStaffHandler(IStaffService staffService) : IRequestHandler<Up
         if (staff == null) throw new KeyNotFoundException();
 
         staff.FirstName = request.FirstName;
-        staff.SecondName = request.SecondName;
-        staff.CommonName = request.CommonName;
+        staff.LastName = request.LastName;
 
         await staffService.UpdateStaffAsync(staff);
 
