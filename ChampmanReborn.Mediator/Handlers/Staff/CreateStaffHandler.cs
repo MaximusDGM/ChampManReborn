@@ -10,8 +10,8 @@ public class CreateStaffHandler(IStaffService staffService) : IRequestHandler<Cr
     {
         var staff = new Domain.Entities.Staff
         {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
+            FirstName = request.createStaffDto.FirstName,
+            LastName = request.createStaffDto.LastName,
         };
 
         await staffService.AddStaffAsync(staff);

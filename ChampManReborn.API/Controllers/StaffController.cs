@@ -27,10 +27,7 @@ public class StaffController(IMediator mediator) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateStaff(CreateStaffDto createStaffDto)
     {
-        var command = new CreateStaffCommand(
-            createStaffDto.FirstName, 
-            createStaffDto.SecondName, 
-            createStaffDto.CommonName);
+        var command = new CreateStaffCommand(createStaffDto);
 
         var id = await mediator.Send(command);
         return CreatedAtAction(nameof(GetStaffById), new { id }, null);
@@ -39,10 +36,7 @@ public class StaffController(IMediator mediator) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateStaff(Guid id, CreateStaffDto updateStaffDto)
     {
-        var command = new UpdateStaffCommand(id,
-            updateStaffDto.FirstName, 
-            updateStaffDto.SecondName, 
-            updateStaffDto.CommonName);
+        var command = new UpdateStaffCommand(id, updateStaffDto);
 
         await mediator.Send(command);
         return NoContent();

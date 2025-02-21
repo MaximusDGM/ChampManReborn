@@ -12,8 +12,8 @@ public class UpdateStaffHandler(IStaffService staffService) : IRequestHandler<Up
 
         if (staff == null) throw new KeyNotFoundException();
 
-        staff.FirstName = request.FirstName;
-        staff.LastName = request.LastName;
+        staff.FirstName = request.CreateStaffDto.FirstName;
+        staff.LastName = request.CreateStaffDto.LastName;
 
         await staffService.UpdateStaffAsync(staff);
 
